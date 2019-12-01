@@ -1,0 +1,38 @@
+<html>
+<head>
+<script>
+$(document).ready(function () {
+    getList();
+    $('.container').click(function (event) {
+        var id = $(this).find('.eventBox').attr('id');
+        console.log(id);
+    });
+});
+var eventTitle = [];
+function getList() {
+    $.ajax({
+        url: "getListDb.php",
+        type: "POST",
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            i = Object.keys(data).length;
+            for (x = 1; x < i + 1; x++) {
+                $(".container").append("<div class='eventBox' id='" + data[x]['id'] + "'><div class='runId'>" + 'Event id: ' + data[x]['id'] + "</div><div class='eventTitle'>" + data[x]['event_name'] + "</div><div class='date'>" + data[x]['date'] + "</div><div class='time'>" + data[x]['time'] + "</div><div class='location'>" + data[x]['location'] + "</div><div class='description'>" + data[x]['description'] + "</div><div class='username'>" + data[x]['username'] + "</div></div>");
+            }
+        }
+    });
+}
+
+</script>
+</head>
+<body>
+    <center><div id="username"><?php echo $userName; ?></div></center>
+    <center><div>Events</div></center>
+    <center>
+      <div class="container">
+        
+      </div>
+    </center>
+</body>
+</html>
